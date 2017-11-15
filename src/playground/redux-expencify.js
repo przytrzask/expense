@@ -13,7 +13,7 @@ const addExpense = ({ description = "", note = "", amount = "", createdAt = 0 })
 
 })
 
-const removeExpense = ({id} ={}) => ({
+const removeExpense = ({ id } = {}) => ({
   type: "REMOVE_EXPENSE",
   id
 
@@ -24,6 +24,28 @@ const editExpense = (id, update) => ({
   id,
   update
 
+})
+
+const setTextFilter = (text = '') => ({
+  type: "SET_TEXT_FILTER",
+  text
+
+})
+
+const sortByAmount = () => ({
+  type: "SORT_BY_AMOUNT"
+})
+
+const sortByDate = () => ({
+  type: "SORT_BY_DATE"
+})
+const setStartDate = (date = undefined) => ({
+  type: "SET_START_DATE",
+  date
+})
+const setEndDate = (date = undefined) => ({
+  type: "SET_END_DATE",
+  date
 })
 
 const expencesReducerDefaultState = []
@@ -38,15 +60,12 @@ const expencesReducer = (state = expencesReducerDefaultState, action) => {
   switch (action.type) {
     case "ADD_EXPENSE":
       return state = [...state, action.expense]
-      case "REMOVE_EXPENSE":
-      return state.filter(item => item.id !== action.id )
-      case "EDIT_EXPENSE":
+    case "REMOVE_EXPENSE":
+      return state.filter(item => item.id !== action.id)
+    case "EDIT_EXPENSE":
       return state.map(expence => {
-        console.log(expence)
-        console.log(action)
         if (expence.id === action.id) {
-          console.log(action.update)
-          return {...expence, ...action.update}
+          return { ...expence, ...action.update }
         } else {
           return expence
         }
@@ -58,9 +77,31 @@ const expencesReducer = (state = expencesReducerDefaultState, action) => {
 
 const filtersReducer = (state = filtersReducerDefaultState, action) => {
   switch (action.type) {
+    case "SET_TEXT_FILTER":
+      return { ...state, text: action.text }
+    case "SORT_BY_AMOUNT":
+      return { ...state, sortBy: "amount" }
+    case "SORT_BY_DATE":
+      return { ...state, sortBy: "date" }
+    case "SET_START_DATE":
+      return { ...state, startDate: action.date }
+    case "SET_END_DATE":
+      return { ...state, endDate: action.date }
     default: return state;
   }
 }
+
+const getVisibleExtensions = (expences, { text, sortBy, startDate, endDate }) => {
+  return expences.filter((expence) => {
+    // const startDateMatch;
+    // const startDateMatch
+    // const endDateMtach
+    // const textMatch
+    
+    // return startDateMatch && endDateMatch && textMatch
+  })
+}
+
 
 const store = createStore(combineReducers({
   expences: expencesReducer,
@@ -68,18 +109,28 @@ const store = createStore(combineReducers({
 }))
 
 store.subscribe(() => {
-  console.log(store.getState
-    ())
+  const state = store.getState();
+  const visibleExtensions = getVisibleExtensions(state.expences, state.filters)
+  console.log(visibleExtensions)
 })
 
 const expenseOne = store.dispatch(addExpense({ description: "rent", amount: 100 }))
 const expenseTwo = store.dispatch(addExpense({ description: "coffe", amount: 140 }))
 
-console.log(expenseOne)
+// console.log(expenseOne)
 
-store.dispatch(removeExpense({ id: expenseOne.expense.id }))
+// store.dispatch(removeExpense({ id: expenseOne.expense.id }))
 
-store.dispatch(editExpense( expenseTwo.expense.id, {amount: 500}))
+// store.dispatch(editExpense(expenseTwo.expense.id, { amount: 500 }))
+
+store.dispatch(setTextFilter("rent"))
+// store.dispatch(setTextFilter())
+// store.dispatch(sortByAmount())
+// store.dispatch(sortByDate())
+
+store.dispatch(setStartDate(125))
+store.dispatch(setStartDate())
+store.dispatch(setEndDate(1250))
 
 
 
