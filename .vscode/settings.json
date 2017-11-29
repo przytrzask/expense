@@ -1,3 +1,4 @@
 {
-    "flow.useNPMPackagedFlow": false
+    "flow.useNPMPackagedFlow": false,
+    "editor.tabSize": 2
 }

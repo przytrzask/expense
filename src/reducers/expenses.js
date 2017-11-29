@@ -1,17 +1,17 @@
-const expencesReducerDefaultState = [];
+const expensesReducerDefaultState = [];
 
-export default (state = expencesReducerDefaultState, action) => {
+export default (state = expensesReducerDefaultState, action) => {
   switch (action.type) {
     case "ADD_EXPENSE":
       return (state = [...state, action.expense]);
     case "REMOVE_EXPENSE":
       return state.filter(item => item.id !== action.id);
     case "EDIT_EXPENSE":
-      return state.map(expence => {
-        if (expence.id === action.id) {
-          return { ...expence, ...action.update };
+      return state.map(expense => {
+        if (expense.id === action.id) {
+          return { ...expense, ...action.update };
         } else {
-          return expence;
+          return expense;
         }
       });
 

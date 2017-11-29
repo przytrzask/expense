@@ -1,14 +1,14 @@
 export const getVisibleExpenses = (
-    expences,
+    expenses,
     { text, sortBy, startDate, endDate }
   ) => {
-    return expences
-      .filter(expence => {
+    return expenses
+      .filter(expense => {
         const startDateMatch =
-          typeof startDate !== "number" || expence.createdAt >= startDate;
+          typeof startDate !== "number" || expense.createdAt >= startDate;
         const endDateMtach =
-          typeof endDate !== "number" || expence.createdAt <= endDate;
-        const textMatch = expence.description
+          typeof endDate !== "number" || expense.createdAt <= endDate;
+        const textMatch = expense.description
           .toLowerCase()
           .includes(text.toLowerCase());
   
